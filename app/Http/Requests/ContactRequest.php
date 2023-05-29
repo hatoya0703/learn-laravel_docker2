@@ -36,4 +36,12 @@ class ContactRequest extends FormRequest
             'body' => 'お問い合わせ内容',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name_kana.regex' => ':attributeは全角カタカナで入力してください。',
+            'phone.regex' => ':attributeはハイフンなしの半角数字で入力してください。',
+        ];
+    }
 }
