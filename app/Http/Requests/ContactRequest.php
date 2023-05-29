@@ -29,4 +29,11 @@ class ContactRequest extends FormRequest
             'body' => ['required', 'string', 'max:2000'],
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'body' => 'お問い合わせ内容',
+        ];
+    }
 }
