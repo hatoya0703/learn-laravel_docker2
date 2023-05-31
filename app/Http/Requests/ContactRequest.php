@@ -41,7 +41,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name_kana.regex' => ':attributeは全角カタカナで入力してください。',
-            'phone.regex' => ':attributeはハイフンなしの半角数字で入力してください。',
+            'phone.regex' => ':attributeは半角数字で入力してください。',
         ];
     }
 }
