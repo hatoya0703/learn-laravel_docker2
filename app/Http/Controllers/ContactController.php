@@ -17,7 +17,7 @@ class ContactController extends Controller
     {
         $validated = $request->validated();
 
-        Log::debug($validated['name']. 'さんよりお問い合わせがありました。');
+        Log::debug($validated['name']. '様よりお問い合わせがありました。');
 
         return to_route('contact.complete');
     }
