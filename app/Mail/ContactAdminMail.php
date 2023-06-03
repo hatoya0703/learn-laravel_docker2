@@ -27,7 +27,8 @@ class ContactAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Admin Mail',
+            from: 'admin@example.com',
+            subject: 'お問い合わせがありました',
         );
     }
 
@@ -37,17 +38,19 @@ class ContactAdminMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            // view: 'view.name',
+            text: 'emails.contact_admin', // resources/views/emails/contact_admin.blade.php
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+    // 添付ファイルをつける場合は以下を使用
+    // /**
+    //  * Get the attachments for the message.
+    //  *
+    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+    //  */
+    // public function attachments(): array
+    // {
+    //     return [];
+    // }
 }
