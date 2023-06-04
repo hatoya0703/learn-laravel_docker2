@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ContactRequest;
+use App\Mail\ContactAdminMail;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -15,9 +17,11 @@ class ContactController extends Controller
 
     public function sendmail(ContactRequest $request)
     {
-        $validated = $request->validated();
+        // バリデーション済みのデータを取得
+        $validated_request= $request->validated();
 
-        Log::debug($validated['name']. '様よりお問い合わせがありました。');
+        // Log::debug($validated['name']. 'さんよりお問い合わせがありました。');
+        Mail::to(users: 'user@example.com')->send(new ContactAdminMail($validated_request));
 
         return to_route('contact.complete');
     }
