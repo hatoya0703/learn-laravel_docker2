@@ -14,7 +14,7 @@ class AdminBlogController extends Controller
     {
         // ブログ一覧画面を表示
         // resources/views/admin/blogs/index.blade.phpを描画
-        return view('admin.blog.index');
+        return view('admin.blogs.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class AdminBlogController extends Controller
     {
         // ブログ登録画面を表示
         // resources/views/admin/blogs/create.blade.phpを描画 
-        return view('admin.blog.create');
+        return view('admin.blogs.create');
     }
 
     /**
