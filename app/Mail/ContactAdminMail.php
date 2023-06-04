@@ -16,6 +16,9 @@ class ContactAdminMail extends Mailable
     /**
      * Create a new message instance.
      */
+    // app/Http/Controllers/ContactController.phpの
+    // Mail::to(users: 'user@example.com')->send(new ContactAdminMail($validated_request));
+    // で渡された$validated_requestを受け取る
     public function __construct(public array $contactInfo)
     {
         //
@@ -27,7 +30,7 @@ class ContactAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'admin@example.com',
+            from: $this->contactInfo['email'],
             subject: 'お問い合わせがありました',
         );
     }
