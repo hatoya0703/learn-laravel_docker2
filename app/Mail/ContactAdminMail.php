@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class ContactAdminMail extends Mailable
 {
@@ -30,7 +31,8 @@ class ContactAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: $this->contactInfo['email'],
+            // Addressクラスのインスタンスを使用することで差出人も指定できる
+            from: new Address($this->contactInfo['email'], $this->contactInfo['name']),
             subject: 'お問い合わせがありました',
         );
     }
