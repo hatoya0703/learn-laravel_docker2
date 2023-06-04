@@ -18,10 +18,10 @@ class ContactController extends Controller
     public function sendmail(ContactRequest $request)
     {
         // バリデーション済みのデータを取得
-        $validated = $request->validated();
+        $validated_request= $request->validated();
 
         // Log::debug($validated['name']. 'さんよりお問い合わせがありました。');
-        Mail::to(users: 'user@example.com')->send(new ContactAdminMail($validated));
+        Mail::to(users: 'user@example.com')->send(new ContactAdminMail($validated_request));
 
         return to_route('contact.complete');
     }
