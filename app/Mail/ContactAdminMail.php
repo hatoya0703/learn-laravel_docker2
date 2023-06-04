@@ -16,7 +16,7 @@ class ContactAdminMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public array $contactInfo)
     {
         //
     }
@@ -39,7 +39,7 @@ class ContactAdminMail extends Mailable
     {
         return new Content(
             // view: 'view.name',
-            text: 'emails.contact_admin', // resources/views/emails/contact_admin.blade.php
+            text: 'email.contact.admin', // resources/views/email/contact/admin.blade.php
         );
     }
 
