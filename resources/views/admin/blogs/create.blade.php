@@ -14,14 +14,16 @@
 
                 <div class="pt-4 px-6">
                     <!-- ▼▼▼▼エラーメッセージ▼▼▼▼　-->
+                    @if ($errors->any())
                     <div class="mb-8 py-4 px-6 border border-red-300 bg-red-50 rounded">
                         <ul>
-                            <li class="text-red-400">タイトルは、必ず指定してください。</li>
-                            <li class="text-red-400">画像は、必ず指定してください。</li>
-                            <li class="text-red-400">本文は、必ず指定してください。</li>
+                        @foreach ($errors->all() as $error)
+                            <li class="text-red-400">{{ $error }}</li>
+                        @endforeach
                         </ul>
                     </div>
                     <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
+                    @endif
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="title">タイトル</label>
                         <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="">
