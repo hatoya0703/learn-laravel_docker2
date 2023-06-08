@@ -11,7 +11,6 @@
                         <button type="submit" class="py-2 px-3 text-xs text-white font-semibold bg-indigo-500 rounded-md">保存</button>
                     </div>
                 </div>
-
                 <div class="pt-4 px-6">
                     <!-- ▼▼▼▼エラーメッセージ▼▼▼▼　-->
                     @if ($errors->any())
@@ -22,11 +21,11 @@
                         @endforeach
                         </ul>
                     </div>
-                    <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
                     @endif
+                    <!-- ▲▲▲▲エラーメッセージ▲▲▲▲　-->
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="title">タイトル</label>
-                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="">
+                        <input id="title" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" type="text" name="title" value="{{ old('title') }}">
                     </div>
 
                     <div class="mb-6">
@@ -39,7 +38,7 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2" for="body">本文</label>
-                        <textarea id="body" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="body" rows="5"></textarea>
+                        <textarea id="body" class="block w-full px-4 py-3 mb-2 text-sm bg-white border rounded" name="body" rows="5">{{ old('body') }}</textarea>
                     </div>
 
                     <div class="mb-6">
