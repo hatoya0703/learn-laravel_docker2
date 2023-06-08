@@ -4,7 +4,8 @@
 <section class="py-8">
     <div class="container px-4 mx-auto">
         <div class="py-4 bg-white rounded">
-            <form>
+            <form action="{{ route('admin.blogs.store') }}" method="" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="flex px-6 pb-4 border-b">
                     <h3 class="text-xl font-bold">ブログ登録</h3>
                     <div class="ml-auto">
