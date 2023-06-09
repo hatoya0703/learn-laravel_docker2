@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\StoreBlogRequest;
+use App\Models\Blog;
 
 class AdminBlogController extends Controller
 {
@@ -30,9 +32,14 @@ class AdminBlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
-        //
+        $saveImagePath = $request->file('image')->store('blogs', 'public');
+        $blogs = new Blog($request->validated());
+        $blogs->image = $saveImagePath;
+        $blogs->save();
+
+        return redirect()->route('admin.blogs.index')->with('success', 'ブログを登録しました');
     }
 
     /**
