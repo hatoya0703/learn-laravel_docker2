@@ -9,10 +9,11 @@ class Blog extends Model
 {
     use HasFactory;
 
-    // ブログのタイトルと本文を保存できるようにする
+    // $fillableプロパティに、保存できるカラムを指定する
     protected $fillable =
     [
         'title',
         'body',
+        'image',
     ];
 }

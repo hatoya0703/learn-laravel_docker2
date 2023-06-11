@@ -34,10 +34,18 @@ class AdminBlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        $saveImagePath = $request->file('image')->store('blogs', 'public'); // 画像を保存
-        $blogs = new Blog($request->validated());
-        $blogs->image = $saveImagePath;
-        $blogs->save();
+        // ①fillとsaveメソッドを使用して保存する場合
+        // インスタンスを作成してから、fillメソッドで値を代入する
+        // $saveImagePath = $request->file('image')->store('blogs', 'public'); // 画像を保存
+        // $blogs = new Blog($request->validated());
+        // $blogs->image = $saveImagePath;
+        // $blogs->save();
+
+        // ②createメソッドを使用して保存する場合
+        // createメソッドは、インスタンスを作成して保存する処理を一括で行う
+        $validated = $request->validated();
+        $validated['image'] = $request->file('image')->store('blogs', 'public');
+        Blog::create($validated);
 
         return redirect()->route('admin.blogs.index')->with('success', 'ブログを登録しました');
     }
