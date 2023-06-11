@@ -15,8 +15,9 @@ class AdminBlogController extends Controller
     public function index()
     {
         // ブログ一覧画面を表示
+        $blogs = Blog::all();
         // resources/views/admin/blogs/index.blade.phpを描画
-        return view('admin.blogs.index');
+        return view('admin.blogs.index', ['blogs' => $blogs]);
     }
 
     /**
