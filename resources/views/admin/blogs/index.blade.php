@@ -23,6 +23,7 @@
                 <tbody>
                 @foreach($blogs as $blog)
                 <tr class="text-sm bg-gray-50">
+                <tr @class(['text-sm', 'bg-gray-50' => $loop->odd])>
                     <td class="flex px-4 py-3 items-center">
                         <img class="w-12 h-12 mr-4 object-cover rounded-md" src="/images/placeholders/blogs/toilet.jpeg" alt="">
                         <p class="font-medium"><a href="#">トイレの教え方</a></p>
