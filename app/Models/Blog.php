@@ -9,6 +9,7 @@ class Blog extends Model
 {
     use HasFactory;
 
+    // ブログのタイトルと本文を保存できるようにする
     protected $fillable =
     [
         'title',
