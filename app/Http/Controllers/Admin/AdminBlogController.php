@@ -35,6 +35,8 @@ class AdminBlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
+        // ブログ作成処理
+
         // ①fillとsaveメソッドを使用して保存する場合
         // インスタンスを作成してから、fillメソッドで値を代入する
         // $saveImagePath = $request->file('image')->store('blogs', 'public'); // 画像を保存
@@ -62,9 +64,11 @@ class AdminBlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        // ブログ編集画面を表示
+        $blog = Blog::find($id);
+        return view('admin.blogs.edit', ['blog' => $blog]);
     }
 
     /**
