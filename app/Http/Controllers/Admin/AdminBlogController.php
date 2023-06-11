@@ -25,7 +25,7 @@ class AdminBlogController extends Controller
     public function create()
     {
         // ブログ登録画面を表示
-        // resources/views/admin/blogs/create.blade.phpを描画 
+        // resources/views/admin/blogs/create.blade.phpを描画
         return view('admin.blogs.create');
     }
 
@@ -34,7 +34,7 @@ class AdminBlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        $saveImagePath = $request->file('image')->store('blogs', 'public');
+        $saveImagePath = $request->file('image')->store('blogs', 'public'); // 画像を保存
         $blogs = new Blog($request->validated());
         $blogs->image = $saveImagePath;
         $blogs->save();
