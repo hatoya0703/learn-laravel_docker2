@@ -22,15 +22,16 @@
                 </thead>
                 <tbody>
                 @foreach($blogs as $blog)
-                <tr class="text-sm bg-gray-50">
+                {{-- <tr class="text-sm bg-gray-50"> --}}
                 <tr @class(['text-sm', 'bg-gray-50' => $loop->odd])>
                     <td class="flex px-4 py-3 items-center">
-                        <img class="w-12 h-12 mr-4 object-cover rounded-md" src="/images/placeholders/blogs/toilet.jpeg" alt="">
-                        <p class="font-medium"><a href="#">トイレの教え方</a></p>
+                        {{-- <img class="w-12 h-12 mr-4 object-cover rounded-md" src="/images/placeholders/blogs/toilet.jpeg" alt=""> --}}
+                        <img class="w-12 h-12 mr-4 object-cover rounded-md" src="{{ asset('storage/'. $blog->image) }}" alt="">
+                        <p class="font-medium"><a href="#">{{ $blog->title }}</a></p>
                     </td>
                     <td class="font-medium">成長</td>
                     <td class="font-medium">高橋</td>
-                    <td>2022.03.12 14:23:10</td>
+                    <td>{{ $blog->updated_at }}</td>
                     <td>
                         <div class="flex">
                             <a class="mr-2" href="#">
