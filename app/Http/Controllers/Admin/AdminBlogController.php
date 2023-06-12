@@ -65,10 +65,11 @@ class AdminBlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    // public function edit(int $id)
+    public function edit(Blog $blog) // ルートモデルバインディングを使用する場合は、引数にモデルを指定する
     {
         // ブログ編集画面を表示
-        $blog = Blog::findorFail($id);
+        // $blog = Blog::findorFail($id); // ルートモデルバインディングを使用する場合は、findorFailメソッドは不要
         return view('admin.blogs.edit', ['blog' => $blog]);
     }
 
