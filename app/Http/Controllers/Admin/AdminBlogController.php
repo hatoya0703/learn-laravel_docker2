@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Admin\StoreBlogRequest;
+use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
 {
@@ -15,7 +16,7 @@ class AdminBlogController extends Controller
     public function index()
     {
         // ブログ一覧画面を表示
-        $blogs = Blog::all();
+        $blogs = Blog::latest('updated_at')->paginate(10);
         // resources/views/admin/blogs/index.blade.phpを描画
         return view('admin.blogs.index', ['blogs' => $blogs]);
     }
@@ -74,9 +75,22 @@ class AdminBlogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBlogRequest $request, int $id)
     {
-        //
+        // ブログ更新処理
+        $blog = Blog::findorFail($id);
+        $updateData = $request->validated();
+
+        // 画像を変更する場合の処理
+        if ($request->has('image')) {
+            // 変更前の画像を削除
+            Storage::disk('public')->delete($blog->image);
+            // 変更後の画像をアップロード
+            $updateData['image'] = $request->file('image')->store('blogs', 'public'); // storeメソッドで画像を保存し、保存した画像のパスが返ってくるので、それを$updateData['image']に代入
+        }
+
+        $blog->update($updateData);
+        return redirect()->route('admin.blogs.index')->with('success', 'ブログを更新しました');
     }
 
     /**
@@ -84,6 +98,11 @@ class AdminBlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // ブログ削除処理
+        $blog = Blog::findorFail($id);
+        $blog->delete();
+        Storage::disk('public')->delete($blog->image);
+
+        return to_route('admin.blogs.index')->with('success', 'ブログを削除しました');
     }
 }
