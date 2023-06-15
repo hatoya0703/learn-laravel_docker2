@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('bolgs', function (Blueprint $table) {
-            //
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->foreignId('category_id')->after('id')->constrained(); // constrained()で外部キー制約をつける
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('bolgs', function (Blueprint $table) {
-            //
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->dropColumn('category_id');
         });
     }
 };
