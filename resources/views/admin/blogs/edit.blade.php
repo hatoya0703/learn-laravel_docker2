@@ -49,6 +49,8 @@
                             <select id="category" class="appearance-none block pl-4 pr-8 py-3 mb-2 text-sm bg-white border rounded" name="category_id">
                                 <option>選択してください</option>
                                 @foreach ($categories as $category)
+                                <!-- カテゴリIDをvalue属性、カテゴリ名を表示するテキストとして含むoption要素を生成します。-->
+                                <!-- このカテゴリが現在選択されている場合（以前に選択されたことがあるか、デフォルトである場合）、"selected"属性を追加します。 -->
                                 <option value="{{ $category->id }}" @if($category->id == old('category_id', $blog->category->id)) selected @endif>{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -62,11 +64,11 @@
 
                     <div class="mb-6">
                         <label class="block text-sm font-medium mb-2">登場するねこ</label>
-                        <select id="js-pulldown" class="mr-6 w-full" name="" multiple>
-                            <option selected>Option 1</option>
-                            <option>Option 2</option>
-                            <option selected>Option 3</option>
-                            <option>Option 4</option>
+                        <select id="js-pulldown" class="mr-6 w-full" name="cats[]" multiple>
+                            <option value="">選択してください</option>
+                            @foreach ($cats as $cat)
+                            <option value="{{ $cat->id }}" @if(in_array($cat->id, old('cats', $blog->cats->pluck('id')->all()))) selected @endif>{{ $cat->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
