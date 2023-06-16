@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AdminBlogController;
+use App\Http\Controllers\Admin\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,4 @@ Route::get('/admin/blogs/{blog}', [AdminBlogController::class, 'edit'])->name('a
 Route::put('/admin/blogs/{blog}', [AdminBlogController::class, 'update'])->name('admin.blogs.update');
 Route::delete('/admin/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogs.delete');
 
-Route::get('admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
