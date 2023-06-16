@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 
 class AdminBlogController extends Controller
 {
@@ -70,7 +71,9 @@ class AdminBlogController extends Controller
     {
         // ブログ編集画面を表示
         // $blog = Blog::findorFail($id); // ルートモデルバインディングを使用する場合は、findorFailメソッドは不要
-        return view('admin.blogs.edit', ['blog' => $blog]);
+
+        $categories = Category::all();
+        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories]);
     }
 
     /**
@@ -90,6 +93,7 @@ class AdminBlogController extends Controller
             $updateData['image'] = $request->file('image')->store('blogs', 'public'); // storeメソッドで画像を保存し、保存した画像のパスが返ってくるので、それを$updateData['image']に代入
         }
 
+        $blog->category()->associate($updateData['category_id']); // associateメソッドで、$updateData['category_id']の値をcategory_idカラムに保存
         $blog->update($updateData);
         return redirect()->route('admin.blogs.index')->with('success', 'ブログを更新しました');
     }

@@ -22,6 +22,7 @@ class UpdateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'category_id' => ['required', 'integer', 'exists:categories,id'], // カテゴリーIDがcategoriesテーブルのidカラムに存在することを確認
             'title' => ['required', 'string', 'max:255'],
             'image' => [
                 'nullable', // 省略可
