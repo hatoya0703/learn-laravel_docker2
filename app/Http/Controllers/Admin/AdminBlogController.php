@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Cat;
 
 class AdminBlogController extends Controller
 {
@@ -73,7 +74,8 @@ class AdminBlogController extends Controller
         // $blog = Blog::findorFail($id); // ルートモデルバインディングを使用する場合は、findorFailメソッドは不要
 
         $categories = Category::all();
-        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories]);
+        $cats = Cat::all();
+        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories, 'cats' => $cats]);
     }
 
     /**
@@ -94,6 +96,8 @@ class AdminBlogController extends Controller
         }
 
         $blog->category()->associate($updateData['category_id']); // associateメソッドで、$updateData['category_id']の値をcategory_idカラムに保存
+        // $blog->cats()->attach($updateData['cats']); // attachメソッドだと、同じ値を複数回保存できないので、syncメソッドを使用しなければならない
+        $blog->cats()->sync($updateData['cats'] ?? []) ; // syncメソッドは、同じ値を複数回保存できる。また、null合体演算子によって、値がない場合は、空の配列を代入する
         $blog->update($updateData);
         return redirect()->route('admin.blogs.index')->with('success', 'ブログを更新しました');
     }
