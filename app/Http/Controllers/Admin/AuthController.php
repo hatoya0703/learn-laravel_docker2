@@ -29,7 +29,7 @@ class AuthController extends Controller
 
             // ミドルウェアに対応したリダイレクト(後述)
             // 下記はredirect('/admin/blogs')に類似
-            return redirect()->intended('/admin/blogs');
+            return redirect()->intended('/admin/blogs'); // intendedメソッドはログイン前にアクセスしようとしていたページへリダイレクトする
         }
 
         // ログイン情報が正しくない場合のみ実行される処理(return すると以降の処理は実行されないため)
