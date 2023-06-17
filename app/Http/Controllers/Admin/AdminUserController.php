@@ -34,6 +34,7 @@ class AdminUserController extends Controller
         $validated = $request->validated();
         $validated['image'] = $request->file('image')->store('users', 'public');
         $validated['password'] = Hash::make($validated['password']);
+        User::create($validated);
 
         return back()->with('success', 'ユーザーを登録しました');
     }
