@@ -21,7 +21,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect(route('admin.blogs.index')); // ログイン済みでログイン画面に遷移しようと場合は管理画面トップへリダイレクト
             }
         }
 
