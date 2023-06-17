@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\StoreUserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -27,9 +29,13 @@ class AdminUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['image'] = $request->file('image')->store('users', 'public');
+        $validated['password'] = Hash::make($validated['password']);
+
+        return back()->with('success', 'ユーザーを登録しました');
     }
 
     /**
