@@ -9,9 +9,25 @@ use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
 use App\Models\Cat;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class AdminBlogController extends Controller
 {
+    # コンストラクタ
+    public function __construct()
+    {
+        // ミドルウェアを使用して、コントローラーのアクションを実行する前に、ユーザーが認証されているかどうかを確認する。
+        // $requestと$nextパラメータを持つ無名ミドルウェア関数を定義する
+        $this->middleware(function ($request, $next) {
+        // 認証されたユーザーオブジェクトを$this->userプロパティーにセットする
+            $this->user = Auth::user();
+            // 更新された$requestインスタンスを使用して、パイプライン内の次のミドルウェアを呼び出す。
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +36,7 @@ class AdminBlogController extends Controller
         // ブログ一覧画面を表示
         $blogs = Blog::latest('updated_at')->paginate(10);
         // resources/views/admin/blogs/index.blade.phpを描画
-        return view('admin.blogs.index', ['blogs' => $blogs]);
+        return view('admin.blogs.index', ['blogs' => $blogs, 'user' => $this->user]);
     }
 
     /**
@@ -30,7 +46,7 @@ class AdminBlogController extends Controller
     {
         // ブログ登録画面を表示
         // resources/views/admin/blogs/create.blade.phpを描画
-        return view('admin.blogs.create');
+        return view('admin.blogs.create', ['user' => $this->user]);
     }
 
     /**
@@ -75,7 +91,7 @@ class AdminBlogController extends Controller
 
         $categories = Category::all();
         $cats = Cat::all();
-        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories, 'cats' => $cats]);
+        return view('admin.blogs.edit', ['blog' => $blog, 'categories' => $categories, 'cats' => $cats, 'user' => $this->user]);
     }
 
     /**
