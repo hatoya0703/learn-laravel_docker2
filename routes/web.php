@@ -25,16 +25,26 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact', [ContactController::class, 'sendmail']) ;
 Route::get('/contact/complete', [ContactController::class, 'complete'])->name('contact.complete');
 
-Route::get('/admin/blogs', [AdminBlogController::class, 'index'])->name('admin.blogs.index')->middleware('auth');
-Route::get('/admin/blogs/create', [AdminBlogController::class, 'create'])->name('admin.blogs.create')->middleware('auth');
-Route::post('/admin/blogs/store', [AdminBlogController::class, 'store'])->name('admin.blogs.store')->middleware('auth');
-Route::get('/admin/blogs/{blog}', [AdminBlogController::class, 'edit'])->name('admin.blogs.edit')->middleware('auth');
-Route::put('/admin/blogs/{blog}', [AdminBlogController::class, 'update'])->name('admin.blogs.update')->middleware('auth');
-Route::delete('/admin/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogs.delete')->middleware('auth');
-
-Route::get('/admin/users/create', [AdminUserController::class, 'create'])->name('admin.users.create')->middleware('auth');
-Route::post('/admin/users/store', [AdminUserController::class, 'store'])->name('admin.users.store')->middleware('auth');
-
-Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
-Route::post('/admin/login', [AuthController::class, 'login']);
-Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::prefix('/admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::middleware('auth')
+        // ログインが必要なルート群
+            ->group(function () {
+                Route::get('/blogs', [AdminBlogController::class, 'index'])->name('blogs.index');
+                Route::get('/blogs/create', [AdminBlogController::class, 'create'])->name('blogs.create');
+                Route::post('/blogs/store', [AdminBlogController::class, 'store'])->name('blogs.store');
+                Route::get('/blogs/{blog}', [AdminBlogController::class, 'edit'])->name('blogs.edit');
+                Route::put('/blogs/{blog}', [AdminBlogController::class, 'update'])->name('blogs.update');
+                Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('blogs.delete');
+                Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
+                Route::post('/users/store', [AdminUserController::class, 'store'])->name('users.store');
+                Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
+            });
+        Route::middleware('auth')
+        // ログインしている場合にアクセス出来ないルート群
+            ->group(function () {
+                Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login')->middleware('guest'); 
+                Route::post('/admin/login', [AuthController::class, 'login']);
+            });
+    });
